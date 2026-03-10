@@ -1,270 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AKBAR GADGET Spare Part Price List</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AKBAR GADGET Spare Part Price List</title>
 
-  <style>
-    body{
-      font-family: Arial, sans-serif;
-      margin:0;
-      background:#f4f4f4;
-    }
+<style>
 
-    header{
-      background:#111;
-      color:white;
-      text-align:center;
-      padding:20px;
-    }
+body{
+font-family: Arial, sans-serif;
+margin:0;
+background:#f4f4f4;
+}
 
-    .logo{
-      width:90px;
-      height:90px;
-      object-fit:contain;
-      display:block;
-      margin:0 auto 12px;
-      background:white;
-      padding:8px;
-      border-radius:14px;
-      box-sizing:border-box;
-    }
+header{
+background:#111;
+color:white;
+text-align:center;
+padding:20px;
+}
 
-    header h1{
-      margin:0;
-      font-size:28px;
-    }
+.logo{
+width:90px;
+height:90px;
+object-fit:contain;
+display:block;
+margin:0 auto 12px;
+background:white;
+padding:8px;
+border-radius:14px;
+box-sizing:border-box;
+}
 
-    header p{
-      margin:8px 0 0;
-      color:#ddd;
-      font-size:14px;
-    }
+header h1{
+margin:0;
+font-size:28px;
+}
 
-    .container{
-      max-width:1100px;
-      margin:auto;
-      padding:20px;
-    }
+header p{
+margin:8px 0 0;
+color:#ddd;
+font-size:14px;
+}
 
-    .search-box{
-      text-align:center;
-      margin-bottom:20px;
-    }
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
 
-    .search-box input{
-      width:90%;
-      max-width:400px;
-      padding:12px;
-      font-size:16px;
-      border-radius:8px;
-      border:1px solid #ccc;
-    }
+.search-box{
+text-align:center;
+margin-bottom:10px;
+}
 
-    .product-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:20px;
-    }
+.search-box input{
+width:90%;
+max-width:400px;
+padding:12px;
+font-size:16px;
+border-radius:8px;
+border:1px solid #ccc;
+}
 
-    .card{
-      background:white;
-      border-radius:12px;
-      overflow:hidden;
-      box-shadow:0 4px 8px rgba(0,0,0,0.1);
-    }
+.brand-filter{
+text-align:center;
+margin-bottom:20px;
+}
 
-    .card img{
-      width:100%;
-      height:220px;
-      object-fit:contain;
-      background:#fff;
-      padding:10px;
-      box-sizing:border-box;
-      display:block;
-    }
+.brand-filter button{
+padding:8px 14px;
+margin:4px;
+border:none;
+border-radius:6px;
+background:#222;
+color:white;
+cursor:pointer;
+}
 
-    .card-content{
-      padding:15px;
-    }
+.brand-filter button:hover{
+background:#444;
+}
 
-    .card h2{
-      margin:0 0 10px;
-    }
+.product-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+}
 
-    .price-list p{
-      margin:6px 0;
-    }
+.card{
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 4px 8px rgba(0,0,0,0.1);
+}
 
-    .whatsapp-btn{
-      display:inline-block;
-      margin-top:10px;
-      padding:10px 15px;
-      background:#25d366;
-      color:white;
-      text-decoration:none;
-      border-radius:6px;
-      font-weight:bold;
-    }
+.card img{
+width:100%;
+height:220px;
+object-fit:contain;
+background:#fff;
+padding:10px;
+box-sizing:border-box;
+display:block;
+}
 
-    .whatsapp-btn:hover{
-      background:#1ebe5d;
-    }
+.card-content{
+padding:15px;
+}
 
-    .status{
-      text-align:center;
-      color:#666;
-      margin-top:20px;
-      font-size:15px;
-    }
-  </style>
+.card h2{
+margin:0 0 10px;
+}
+
+.price-list p{
+margin:6px 0;
+}
+
+.whatsapp-btn{
+display:inline-block;
+margin-top:10px;
+padding:10px 15px;
+background:#25d366;
+color:white;
+text-decoration:none;
+border-radius:6px;
+font-weight:bold;
+}
+
+.whatsapp-btn:hover{
+background:#1ebe5d;
+}
+
+.status{
+text-align:center;
+color:#666;
+margin-top:20px;
+font-size:15px;
+}
+
+</style>
 </head>
 
 <body>
 
-  <header>
-    <img src="logo-dir7.png" alt="AKBAR Gadget Logo" class="logo">
-    <h1>AKBAR GADGET Spare Part Price List</h1>
-    <p>Scan sekali, cari model phone dan semak harga spare part</p>
-  </header>
+<header>
+<img src="logo-dir7.png" alt="AKBAR Gadget Logo" class="logo">
+<h1>AKBAR GADGET Spare Part Price List</h1>
+<p>Scan sekali, cari model phone dan semak harga spare part</p>
+</header>
 
-  <div class="container">
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Search phone model...">
-    </div>
+<div class="container">
 
-    <div class="product-grid" id="productGrid"></div>
-    <div class="status" id="status">Loading data...</div>
-  </div>
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Search phone model...">
+</div>
 
-  <script>
-    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQU7IxnvEl-q2rOvvY-W07bBDEtzLzMf_RdIO1cFhFl_akWCAO-CMBAWwsvW4CIGI6JXwS13WHq9meC/pub?output=csv";
-    const whatsappNumber = "60126647699";
+<div class="brand-filter">
+<button onclick="filterBrand('all')">All</button>
+<button onclick="filterBrand('vivo')">Vivo</button>
+<button onclick="filterBrand('samsung')">Samsung</button>
+<button onclick="filterBrand('oppo')">Oppo</button>
+</div>
 
-    let allProducts = [];
+<div class="product-grid" id="productGrid"></div>
+<div class="status" id="status">Loading data...</div>
 
-    function parseCSVLine(line) {
-      const result = [];
-      let current = "";
-      let insideQuotes = false;
+</div>
 
-      for (let i = 0; i < line.length; i++) {
-        const char = line[i];
-        const nextChar = line[i + 1];
+<script>
 
-        if (char === '"') {
-          if (insideQuotes && nextChar === '"') {
-            current += '"';
-            i++;
-          } else {
-            insideQuotes = !insideQuotes;
-          }
-        } else if (char === "," && !insideQuotes) {
-          result.push(current.trim());
-          current = "";
-        } else {
-          current += char;
-        }
-      }
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQU7IxnvEl-q2rOvvY-W07bBDEtzLzMf_RdIO1cFhFl_akWCAO-CMBAWwsvW4CIGI6JXwS13WHq9meC/pub?output=csv";
+const whatsappNumber = "60126647699";
 
-      result.push(current.trim());
-      return result;
-    }
+let allProducts = [];
+let currentBrand = "all";
 
-    function parseCSV(csvText) {
-      const lines = csvText.trim().split(/\r?\n/);
-      if (lines.length < 2) return [];
+function parseCSVLine(line){
+const result=[];
+let current="";
+let insideQuotes=false;
 
-      const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
+for(let i=0;i<line.length;i++){
+const char=line[i];
+const nextChar=line[i+1];
 
-      return lines.slice(1).map(line => {
-        const values = parseCSVLine(line);
-        const row = {};
+if(char === '"'){
+if(insideQuotes && nextChar === '"'){
+current+='"';
+i++;
+}else{
+insideQuotes=!insideQuotes;
+}
+}else if(char === "," && !insideQuotes){
+result.push(current.trim());
+current="";
+}else{
+current+=char;
+}
+}
 
-        headers.forEach((header, index) => {
-          row[header] = values[index] ? values[index].trim() : "";
-        });
+result.push(current.trim());
+return result;
+}
 
-        return row;
-      }).filter(row => row["model"]);
-    }
+function parseCSV(csvText){
+const lines=csvText.trim().split(/\r?\n/);
+if(lines.length<2) return [];
 
-    function formatPrice(value) {
-      if (!value) return "-";
-      return value.toString().toLowerCase().includes("rm") ? value : "RM" + value;
-    }
+const headers=parseCSVLine(lines[0]).map(h=>h.trim().toLowerCase());
 
-    function createCard(product) {
-      const model = product["model"] || "";
-      const image = product["image"] || "";
-      const lcd = product["lcd"] || "";
-      const battery = product["battery"] || "";
-      const chargingPort = product["charging port"] || "";
-      const backglass = product["backglass"] || "";
-      const message = encodeURIComponent("Saya nak tanya tentang " + model);
+return lines.slice(1).map(line=>{
+const values=parseCSVLine(line);
+const row={};
 
-      return `
-        <div class="card">
-          <img src="${image}" alt="${model}" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image';">
-          <div class="card-content">
-            <h2>${model}</h2>
-            <div class="price-list">
-              <p><strong>LCD:</strong> ${formatPrice(lcd)}</p>
-              <p><strong>Battery:</strong> ${formatPrice(battery)}</p>
-              <p><strong>Charging Port:</strong> ${formatPrice(chargingPort)}</p>
-              <p><strong>Backglass:</strong> ${formatPrice(backglass)}</p>
-            </div>
-            <a class="whatsapp-btn" href="https://wa.me/${whatsappNumber}?text=${message}" target="_blank">
-              WhatsApp Now
-            </a>
-          </div>
-        </div>
-      `;
-    }
+headers.forEach((header,index)=>{
+row[header]=values[index]?values[index].trim():"";
+});
 
-    function renderProducts(products) {
-      const productGrid = document.getElementById("productGrid");
-      const status = document.getElementById("status");
+return row;
 
-      if (products.length === 0) {
-        productGrid.innerHTML = "";
-        status.textContent = "Tiada data dijumpai.";
-        return;
-      }
+}).filter(row=>row["model"]);
+}
 
-      productGrid.innerHTML = products.map(createCard).join("");
-      status.textContent = "";
-    }
+function formatPrice(value){
+if(!value) return "-";
+return value.toString().toLowerCase().includes("rm") ? value : "RM"+value;
+}
 
-    async function loadSheetData() {
-      const status = document.getElementById("status");
+function createCard(product){
 
-      try {
-        const response = await fetch(sheetURL);
-        const csvText = await response.text();
+const model=product["model"]||"";
+const image=product["image"]||"";
+const lcd=product["lcd"]||"";
+const battery=product["battery"]||"";
+const chargingPort=product["charging port"]||"";
+const backglass=product["backglass"]||"";
 
-        allProducts = parseCSV(csvText);
-        renderProducts(allProducts);
-      } catch (error) {
-        console.error("Error loading sheet data:", error);
-        status.textContent = "Data tak berjaya load. Sila check link Google Sheet.";
-      }
-    }
+const message=encodeURIComponent("Saya nak tanya tentang "+model);
 
-    document.getElementById("searchInput").addEventListener("keyup", function() {
-      const value = this.value.toLowerCase();
+return `
+<div class="card">
+<img src="${image}" alt="${model}" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image';">
+<div class="card-content">
 
-      const filteredProducts = allProducts.filter(product => {
-        const model = (product["model"] || "").toLowerCase();
-        return model.includes(value);
-      });
+<h2>${model}</h2>
 
-      renderProducts(filteredProducts);
-    });
+<div class="price-list">
+<p><strong>LCD:</strong> ${formatPrice(lcd)}</p>
+<p><strong>Battery:</strong> ${formatPrice(battery)}</p>
+<p><strong>Charging Port:</strong> ${formatPrice(chargingPort)}</p>
+<p><strong>Backglass:</strong> ${formatPrice(backglass)}</p>
+</div>
 
-    loadSheetData();
-  </script>
+<a class="whatsapp-btn"
+href="https://wa.me/${whatsappNumber}?text=${message}"
+target="_blank">
+WhatsApp Now
+</a>
+
+</div>
+</div>
+`;
+}
+
+function renderProducts(products){
+
+const productGrid=document.getElementById("productGrid");
+const status=document.getElementById("status");
+
+if(products.length===0){
+productGrid.innerHTML="";
+status.textContent="Tiada data dijumpai.";
+return;
+}
+
+productGrid.innerHTML=products.map(createCard).join("");
+status.textContent="";
+}
+
+function applyFilters(){
+
+let filtered=allProducts;
+
+if(currentBrand!=="all"){
+filtered=filtered.filter(p=>{
+return (p["brand"]||"").toLowerCase()===currentBrand;
+});
+}
+
+const searchValue=document.getElementById("searchInput").value.toLowerCase();
+
+filtered=filtered.filter(p=>{
+return (p["model"]||"").toLowerCase().includes(searchValue);
+});
+
+renderProducts(filtered);
+}
+
+function filterBrand(brand){
+currentBrand=brand;
+applyFilters();
+}
+
+async function loadSheetData(){
+
+const status=document.getElementById("status");
+
+try{
+
+const response=await fetch(sheetURL);
+const csvText=await response.text();
+
+allProducts=parseCSV(csvText);
+
+applyFilters();
+
+}catch(error){
+
+console.error("Error loading sheet data:",error);
+status.textContent="Data tak berjaya load. Sila check link Google Sheet.";
+
+}
+
+}
+
+document.getElementById("searchInput").addEventListener("keyup",applyFilters);
+
+loadSheetData();
+
+</script>
 
 </body>
 </html>
