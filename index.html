@@ -156,7 +156,6 @@ header{
 </div>
 
 <script>
-
 const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQU7IxnvEl-q2rOvvY-W07bBDEtzLzMf_RdIO1cFhFl_akWCAO-CMBAWwsvW4CIGI6JXwS13WHq9meC/pub?output=csv";
 const whatsappNumber = "60126647699";
 
@@ -164,131 +163,134 @@ let allProducts = [];
 let currentBrand = "All";
 
 function normalizeHeader(header){
-  return header.toLowerCase()
-  .replace(/\s+/g,"_")
-  .replace(/[()]/g,"");
+  return header
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "_")
+    .replace(/[()]/g, "")
+    .replace(/-+/g, "_");
 }
 
 function parseCSV(csv){
-  const lines = csv.split("\n");
+  const lines = csv.trim().split("\n");
   const headers = lines[0].split(",").map(normalizeHeader);
 
-  return lines.slice(1).map(line=>{
+  return lines.slice(1).map(line => {
     const values = line.split(",");
-    let obj={};
-    headers.forEach((h,i)=>obj[h]=values[i]);
+    let obj = {};
+    headers.forEach((h, i) => obj[h] = values[i] ? values[i].trim() : "");
     return obj;
-  }).filter(p=>p.model);
+  }).filter(p => p.model);
 }
 
 function formatPrice(v){
   if(!v) return "-";
-  return v.includes("RM")?v:"RM"+v;
+  return v.includes("RM") ? v : "RM" + v;
 }
 
 function createCard(p){
+  const model = p.model || "";
+  const brand = p.brand || "";
+  const image = p.image || "";
 
-const model=p.model||"";
-const brand=p.brand||"";
-const image=p.image||"";
+  const lcd_w = p.lcd_1_week_warranty || "";
+  const lcd_n = p.lcd_no_warranty || "";
 
-const lcd_w=p.lcd_1_week_warranty||"";
-const lcd_n=p.lcd_no_warranty||"";
+  const bat_w = p.battery_1_week_warranty || "";
+  const bat_n = p.battery_no_warranty || "";
 
-const bat_w=p.battery_1_week_warranty||"";
-const bat_n=p.battery_no_warranty||"";
+  const cp_w = p.charging_port_1_week_warranty || p["charging port 1 week warranty"] || "";
+  const cp_n = p.charging_port_no_warranty || p["charging port no warranty"] || "";
 
-const cp_w=p.charging_port_1_week_warranty||"";
-const cp_n=p.charging_port_no_warranty||"";
+  const msg = encodeURIComponent("Saya nak tanya tentang " + model);
 
-const msg=encodeURIComponent("Saya nak tanya tentang "+model);
+  return `
+  <div class="card">
+    <img src="${image}" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image'">
 
-return `
-<div class="card">
-<img src="${image}" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image'">
+    <div class="card-content">
+      <div class="brand-tag">${brand}</div>
+      <h2>${model}</h2>
 
-<div class="card-content">
+      <div class="price-list">
+        <p>LCD:
+          <span class="price-nowarranty">${formatPrice(lcd_n)}</span>
+          <span>(No Warranty)</span>
+        </p>
 
-<div class="brand-tag">${brand}</div>
-<h2>${model}</h2>
+        <p>LCD:
+          <span class="price-warranty">${formatPrice(lcd_w)}</span>
+          <span>(Warranty 1 Week)</span>
+        </p>
 
-<div class="price-list">
+        <p>Battery:
+          <span class="price-nowarranty">${formatPrice(bat_n)}</span>
+          <span>(No Warranty)</span>
+        </p>
 
-<p>LCD:
-<span class="price-nowarranty">${formatPrice(lcd_n)}</span>
-<span>(No Warranty)</span></p>
+        <p>Battery:
+          <span class="price-warranty">${formatPrice(bat_w)}</span>
+          <span>(Warranty 1 Week)</span>
+        </p>
 
-<p>LCD:
-<span class="price-warranty">${formatPrice(lcd_w)}</span>
-<span>(Warranty 1 Week)</span></p>
+        <p>Charging Port:
+          <span class="price-nowarranty">${formatPrice(cp_n)}</span>
+          <span>(No Warranty)</span>
+        </p>
 
-<p>Battery:
-<span class="price-nowarranty">${formatPrice(bat_n)}</span>
-<span>(No Warranty)</span></p>
+        <p>Charging Port:
+          <span class="price-warranty">${formatPrice(cp_w)}</span>
+          <span>(Warranty 1 Week)</span>
+        </p>
+      </div>
 
-<p>Battery:
-<span class="price-warranty">${formatPrice(bat_w)}</span>
-<span>(Warranty 1 Week)</span></p>
-
-<p>Charging Port:
-<span class="price-nowarranty">${formatPrice(cp_n)}</span>
-<span>(No Warranty)</span></p>
-
-<p>Charging Port:
-<span class="price-warranty">${formatPrice(cp_w)}</span>
-<span>(Warranty 1 Week)</span></p>
-
-</div>
-
-<a class="whatsapp-btn"
-href="https://wa.me/${whatsappNumber}?text=${msg}"
-target="_blank">
-WhatsApp Now
-</a>
-
-</div>
-</div>
-`;
+      <a class="whatsapp-btn"
+         href="https://wa.me/${whatsappNumber}?text=${msg}"
+         target="_blank">
+         WhatsApp Now
+      </a>
+    </div>
+  </div>
+  `;
 }
 
 function render(){
-let filtered=allProducts.filter(p=>{
-let m=(p.model||"").toLowerCase();
-let b=(p.brand||"").toLowerCase();
-let s=document.getElementById("searchInput").value.toLowerCase();
+  let filtered = allProducts.filter(p => {
+    let m = (p.model || "").toLowerCase();
+    let b = (p.brand || "").toLowerCase();
+    let s = document.getElementById("searchInput").value.toLowerCase();
 
-return m.includes(s) && (currentBrand=="All"||b==currentBrand.toLowerCase());
-});
+    return m.includes(s) && (currentBrand == "All" || b == currentBrand.toLowerCase());
+  });
 
-document.getElementById("productGrid").innerHTML=filtered.map(createCard).join("");
+  document.getElementById("productGrid").innerHTML = filtered.map(createCard).join("");
 }
 
 function renderBrands(){
-let brands=["All",...new Set(allProducts.map(p=>p.brand).filter(Boolean))];
+  let brands = ["All", ...new Set(allProducts.map(p => p.brand).filter(Boolean))];
 
-document.getElementById("brandFilters").innerHTML=brands.map(b=>`
-<button class="brand-btn ${b==currentBrand?"active":""}" onclick="selectBrand('${b}')">${b}</button>
-`).join("");
+  document.getElementById("brandFilters").innerHTML = brands.map(b => `
+    <button class="brand-btn ${b == currentBrand ? "active" : ""}" onclick="selectBrand('${b}')">${b}</button>
+  `).join("");
 }
 
 function selectBrand(b){
-currentBrand=b;
-renderBrands();
-render();
+  currentBrand = b;
+  renderBrands();
+  render();
 }
 
-document.getElementById("searchInput").addEventListener("keyup",render);
+document.getElementById("searchInput").addEventListener("keyup", render);
 
 async function load(){
-let res=await fetch(sheetURL);
-let text=await res.text();
-allProducts=parseCSV(text);
-renderBrands();
-render();
+  let res = await fetch(sheetURL);
+  let text = await res.text();
+  allProducts = parseCSV(text);
+  renderBrands();
+  render();
 }
 
 load();
-
 </script>
 
 </body>
