@@ -1,4 +1,4 @@
-```html id="wd1x0g"
+```html id="k8u2lm"
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -187,11 +187,7 @@ function normalizeHeader(header){
 
   return header
     .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "_")
-    .replace(/[()]/g, "")
-    .replace(/\//g, "_")
-    .replace(/-+/g, "_");
+    .toLowerCase();
 
 }
 
@@ -200,7 +196,7 @@ function parseCSV(csv){
   const lines = csv.trim().split("\n");
 
   const headers =
-  lines[0].split(",").map(normalizeHeader);
+  lines[0].split(",");
 
   return lines.slice(1).map(line => {
 
@@ -218,7 +214,7 @@ function parseCSV(csv){
 
     return obj;
 
-  }).filter(p => p.model);
+  }).filter(p => p["Model"]);
 
 }
 
@@ -234,33 +230,20 @@ function formatPrice(v){
 
 function createCard(p){
 
-  const model = p.model || "";
-  const brand = p.brand || "";
-  const image = p.image || "";
+  const values = Object.values(p);
 
-  const lcd_ori =
-  p.lcd_ori_1_month_warranty ||
-  p.lcd_ori_1_month ||
-  "";
+  const brand = values[0] || "";
+  const model = values[1] || "";
+  const image = values[2] || "";
 
-  const lcd_gx =
-  p.lcd_oled_gx ||
-  p.lcd_oledgx ||
-  "";
+  const lcd_ori = values[3] || "";
+  const lcd_gx = values[4] || "";
+  const lcd_standard = values[5] || "";
 
-  const lcd_standard =
-  p.lcd_standard || "";
+  const battery_ori = values[6] || "";
+  const battery_standard = values[7] || "";
 
-  const battery_ori =
-  p.battery_ori ||
-  p.battery_ori_1_week ||
-  "";
-
-  const battery_standard =
-  p.battery_standard || "";
-
-  const charging_port =
-  p.charging_port || "";
+  const charging_port = values[8] || "";
 
   const msg =
   encodeURIComponent(
@@ -351,24 +334,26 @@ function render(){
   let filtered =
   allProducts.filter(p => {
 
-    let m =
-    (p.model || "").toLowerCase();
+    const values = Object.values(p);
 
-    let b =
-    (p.brand || "").toLowerCase();
+    let brand =
+    (values[0] || "").toLowerCase();
 
-    let s =
+    let model =
+    (values[1] || "").toLowerCase();
+
+    let search =
     document
     .getElementById("searchInput")
     .value
     .toLowerCase();
 
-    return m.includes(s)
+    return model.includes(search)
     &&
     (
       currentBrand == "All"
       ||
-      b == currentBrand.toLowerCase()
+      brand == currentBrand.toLowerCase()
     );
 
   });
@@ -387,9 +372,14 @@ function renderBrands(){
     "All",
 
     ...new Set(
-      allProducts
-      .map(p => p.brand)
-      .filter(Boolean)
+      allProducts.map(p => {
+
+        const values =
+        Object.values(p);
+
+        return values[0];
+
+      }).filter(Boolean)
     )
 
   ];
