@@ -1,4 +1,4 @@
-```html
+```html id="wd1x0g"
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,6 +106,7 @@ header{
 
 .price-list p{
   margin:6px 0;
+  font-size:18px;
 }
 
 .price-warranty{
@@ -115,6 +116,7 @@ header{
 
 .price-nowarranty{
   color:#555;
+  font-weight:bold;
 }
 
 .whatsapp-btn{
@@ -138,6 +140,7 @@ header{
 <body>
 
 <header>
+
   <img src="logo-dir7.png" class="logo">
 
   <h1>AKBAR GADGET Spare Part Price List</h1>
@@ -145,25 +148,28 @@ header{
   <p>
     Scan sekali, cari model phone dan semak harga spare part
   </p>
+
 </header>
 
 <div class="container">
 
-<div class="search-box">
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="Search phone model..."
-  >
-</div>
+  <div class="search-box">
 
-<div class="brand-filters" id="brandFilters"></div>
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search phone model..."
+    >
 
-<div class="product-grid" id="productGrid"></div>
+  </div>
 
-<div class="status" id="status">
-  Loading...
-</div>
+  <div class="brand-filters" id="brandFilters"></div>
+
+  <div class="product-grid" id="productGrid"></div>
+
+  <div class="status" id="status">
+    Loading...
+  </div>
 
 </div>
 
@@ -233,16 +239,22 @@ function createCard(p){
   const image = p.image || "";
 
   const lcd_ori =
-  p.lcd_ori_1_month_warranty || "";
+  p.lcd_ori_1_month_warranty ||
+  p.lcd_ori_1_month ||
+  "";
 
   const lcd_gx =
-  p.lcd_oledgx || "";
+  p.lcd_oled_gx ||
+  p.lcd_oledgx ||
+  "";
 
   const lcd_standard =
   p.lcd_standard || "";
 
   const battery_ori =
-  p.battery_ori_1_week || "";
+  p.battery_ori ||
+  p.battery_ori_1_week ||
+  "";
 
   const battery_standard =
   p.battery_standard || "";
@@ -327,6 +339,7 @@ function createCard(p){
       </a>
 
     </div>
+
   </div>
 
   `;
@@ -360,7 +373,8 @@ function render(){
 
   });
 
-  document.getElementById("productGrid")
+  document
+  .getElementById("productGrid")
   .innerHTML =
   filtered.map(createCard).join("");
 
@@ -380,7 +394,8 @@ function renderBrands(){
 
   ];
 
-  document.getElementById("brandFilters")
+  document
+  .getElementById("brandFilters")
   .innerHTML =
 
   brands.map(b => `
